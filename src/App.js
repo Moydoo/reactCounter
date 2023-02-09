@@ -1,32 +1,29 @@
 import React, { useState, useEffect } from "react";
-const STORAGE_KEY = 'counterApp.counter'
+
+const STORAGE_KEY_COUNTER = 'counterApp.counter'
 
 function App() {
-  const [count, setCounter] = useState(0)
+  const [counter, setCounter] = useState(0)
 
   useEffect(() => {
-    const storagedCounts = JSON.parse(localStorage.getItem(STORAGE_KEY))
-    if (storagedCounts) setCounter(storagedCounts)
+    const storagedValue = JSON.parse(localStorage.getItem(STORAGE_KEY_COUNTER))
+    if (storagedValue) setCounter(storagedValue)
   }, [])
 
-
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(count))
-  }, [count])
-
+    localStorage.setItem(STORAGE_KEY_COUNTER, JSON.stringify(counter))
+  }, [counter])
 
   return (
-    <div className="App">
-      <div className="container">
-        <h1 className="text-center my-5">{count}</h1>
-        <div className="buttons-center">
-          <button className="btn btn-success" onClick={() => setCounter(count + 1)}>Increment</button>
-          <button className="btn btn-danger" onClick={() => setCounter(count - 1)} disabled={count === 0}>Decrement</button>
-          <button className="btn btn-secondary" onClick={() => setCounter(0)} disabled={count === 0}>Reset</button>
-          <button className="btn btn-primary" onClick={() => setCounter(count + 10)}>Add 10</button>
-        </div>
+    <div className="app">
+      <h1>{counter}</h1>
+      <div className="buttons__container">
+        <button onClick={() => setCounter(counter + 1)} className="button add">+1</button>
+        <button onClick={() => setCounter(0)} disabled={counter === 0} className="button reset">RESET</button>
+        <button onClick={() => setCounter(counter - 1)} disabled={counter === 0} className="button sub">-1</button>
       </div>
     </div>
+
   );
 }
 
